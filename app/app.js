@@ -3,28 +3,27 @@ import {
   keccak256, toHex, isAddress, getAddress, parseGwei, decodeEventLog,
 } from 'https://esm.sh/viem@2.56.8';
 import { STAGEPAY_ABI, ERC20_ABI } from './abi.js';
-import * as config from './config.js';
+import { NETWORKS, DEFAULT_NET } from './config.js';
 
-// Local testing against `arc-anvil --network arc`: only on localhost, never on the public site.
+// ?net=<key> selects a deployment; local testing against `arc-anvil --network arc` is allowed only on localhost.
 const params = new URLSearchParams(location.search);
 const DEV = ['localhost', '127.0.0.1'].includes(location.hostname) && params.has('dev');
-const CONTRACT = DEV ? params.get('contract') : config.CONTRACT;
-const DEPLOY_BLOCK = DEV ? 0 : config.DEPLOY_BLOCK;
+const NET_KEY = NETWORKS[params.get('net')] ? params.get('net') : DEFAULT_NET;
+const NET = NETWORKS[NET_KEY];
+const CONTRACT = DEV ? params.get('contract') : NET.contract;
+const DEPLOY_BLOCK = DEV ? 0 : NET.deployBlock;
 
 const arc = defineChain({
-  id: DEV ? 31337 : 5042,
-  name: DEV ? 'Arc (local)' : 'Arc',
-  nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 18 },
-  rpcUrls: { default: { http: [DEV ? 'http://127.0.0.1:8547' : 'https://rpc.mainnet.arc.io'] } },
-  blockExplorers: { default: { name: 'Arc Explorer', url: 'https://explorer.arc.io' } },
+  id: DEV ? 31337 : NET.chainId,
+  name: DEV ? 'Arc (local)' : NET.name,
+  nativeCurrency: NET.native,
+  rpcUrls: { default: { http: [DEV ? 'http://127.0.0.1:8547' : NET.rpc] } },
+  blockExplorers: { default: { name: `${NET.name} Explorer`, url: NET.explorer } },
 });
 const EXPLORER = arc.blockExplorers.default.url;
-const TOKENS = {
-  USDC: { address: '0x3600000000000000000000000000000000000000', decimals: 6 },
-  EURC: { address: '0xbEf5f6d51CB62b58e6A8f77868681825C6fe21c1', decimals: 6 },
-};
+const TOKENS = NET.tokens;
 const STATUS = ['None', 'Funded', 'Submitted', 'Released', 'Refunded', 'Split'];
-const MIN_FEE = parseGwei('25'); // Arc drops transactions below the 20 gwei base-fee floor
+const MIN_FEE = parseGwei(String(NET.minFeeGwei));
 
 const pub = createPublicClient({ chain: arc, transport: http() });
 let wallet = null;
@@ -75,7 +74,7 @@ async function updateNet() {
   const n = $('net');
   if (!wallet) return;
   const id = await wallet.getChainId();
-  n.textContent = id === arc.id ? (DEV ? 'Arc local (dev)' : 'Arc mainnet') : `Wrong network (${id})`;
+  n.textContent = id === arc.id ? (DEV ? 'Arc local (dev)' : NET.label) : `Wrong network (${id})`;
   n.className = `pill ${id === arc.id ? 'ok' : 'bad'}`;
 }
 
@@ -271,7 +270,7 @@ function readCreateForm() {
 function summarize() {
   try {
     const { sym, tok, amounts, total } = readCreateForm();
-    $('c-summary').textContent = `${amounts.length} milestone(s), ${formatUnits(total, tok.decimals)} ${sym} will be locked in escrow. Network fees are paid in USDC (about a cent each).`;
+    $('c-summary').textContent = `${amounts.length} milestone(s), ${formatUnits(total, tok.decimals)} ${sym} will be locked in escrow. ${NET.feeNote}`;
   } catch { $('c-summary').textContent = ''; }
 }
 
@@ -327,6 +326,8 @@ $('contract-link').textContent = short(CONTRACT);
 addMilestoneRow('', 7);
 addMilestoneRow('', 14);
 
-if (DEV) $('net').textContent = 'Arc local (dev)';
+$('net').textContent = DEV ? 'Arc local (dev)' : NET.label;
+$('c-token').innerHTML = Object.keys(TOKENS).map((k) => `<option value="${k}">${k}</option>`).join('');
+summarize();
 const q = params.get('job');
 if (q) { $('job-id').value = q; loadJob(q); }
