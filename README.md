@@ -61,7 +61,9 @@ cd app && python3 -m http.server 8000   # static app, no build step
 
 | Network | Address |
 | --- | --- |
-| Arc mainnet (5042) | _pending_ |
+| Arc mainnet (5042) | [`0x0A87039a127b600cF9B85d4C33d97c08054e15E6`](https://explorer.arc.io/address/0x0A87039a127b600cF9B85d4C33d97c08054e15E6) ([deploy tx](https://explorer.arc.io/tx/0xaf4b021ff31c59c4c9ed1ed7bbf1a6828214e8cd3952826ab3a898762d5d3caf)) |
+
+A real job on mainnet, [job #1](https://yangdongsuk.github.io/stagepay/?job=1): [funded](https://explorer.arc.io/tx/0xac9eb5145e4224e95f4d94d988202a56e4755f42dcfd5599866dba299872645d) → [milestone 1 submitted](https://explorer.arc.io/tx/0x20d6887e8dc9d935c044a58228e73a4c1c34f8de8cad1265ed0c3f5d0f89b8f7) → [approved and paid](https://explorer.arc.io/tx/0x363f22afe3850aee4534150cc44d6f0966d6f65eb978c41fcdbecc01bad2995b). Milestone 2 is still open.
 | Arbitrum Sepolia (421614) | [`0x0A87039a127b600cF9B85d4C33d97c08054e15E6`](https://sepolia.arbiscan.io/address/0x0A87039a127b600cF9B85d4C33d97c08054e15E6) · app: [?net=arbitrum-sepolia](https://yangdongsuk.github.io/stagepay/?net=arbitrum-sepolia) · supports **USDG** (Paxos Global Dollar) and USDC |
 
 ## Limitations

@@ -1,5 +1,5 @@
 // Networks Stagepay is deployed on. Pick one with ?net=<key>; Arc mainnet is the default.
-export const DEFAULT_NET = 'arbitrum-sepolia'; // switch back to 'arc' once the Arc mainnet contract is deployed
+export const DEFAULT_NET = 'arc'; // switch back to 'arc' once the Arc mainnet contract is deployed
 
 export const NETWORKS = {
   arc: {
@@ -9,8 +9,8 @@ export const NETWORKS = {
     native: { name: 'USDC', symbol: 'USDC', decimals: 18 },
     rpc: 'https://rpc.mainnet.arc.io',
     explorer: 'https://explorer.arc.io',
-    contract: '0x0000000000000000000000000000000000000000',
-    deployBlock: 0,
+    contract: '0x0A87039a127b600cF9B85d4C33d97c08054e15E6',
+    deployBlock: 22535593,
     minFeeGwei: 25, // Arc drops transactions below its 20 gwei base-fee floor
     feeNote: 'Network fees are paid in USDC (about a cent each).',
     tokens: {
