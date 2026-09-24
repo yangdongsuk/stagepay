@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stagepay · Milestone escrow on Arc</title>
+<meta name="description" content="Milestone escrow for freelance work, settled in USDC or EURC on Arc. Silence past the review window pays the freelancer.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2315803d'/><path d='M8 22h4v-5H8zm6 0h4V12h-4zm6 0h4V8h-4z' fill='white'/></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M8 22h4v-5H8zm6 0h4V12h-4zm6 0h4V8h-4z" fill="var(--bg)"/></svg>
+    <div><b>Stagepay</b><span>Milestone escrow on Arc</span></div>
+  </div>
+  <div class="wallet">
+    <span id="net" class="pill">Arc mainnet</span>
+    <button id="connect" class="btn">Connect wallet</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Get paid per milestone.<br>In dollars, with no gas token to buy.</h1>
+    <p>The client locks the whole job in USDC or EURC up front. Each milestone is released on approval, and if the client goes quiet past the review window, the freelancer claims it. Everything settles on Arc with sub-second finality and fees paid in USDC.</p>
+    <ol class="rules">
+      <li><b>Funded up front.</b> The freelancer can see the money is there before starting.</li>
+      <li><b>Silence pays.</b> No response within the review window lets the freelancer claim.</li>
+      <li><b>Revisions are capped.</b> At most 3 per milestone, so review can't be used to stall.</li>
+      <li><b>Deadlines protect the client.</b> An unsubmitted milestone can be reclaimed after its deadline.</li>
+      <li><b>Settle without an arbiter.</b> Either side proposes a split, the other accepts.</li>
+    </ol>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="open" class="tab active">Open a job</button>
+    <button role="tab" data-tab="create" class="tab">Create a job</button>
+  </nav>
+
+  <section id="tab-open" class="panel">
+    <form id="open-form" class="row">
+      <input id="job-id" type="number" min="1" placeholder="Job ID" required>
+      <button class="btn">Load</button>
+    </form>
+    <div id="job"></div>
+  </section>
+
+  <section id="tab-create" class="panel" hidden>
+    <form id="create-form" class="stack">
+      <label>Freelancer address<input id="c-freelancer" placeholder="0x…" required pattern="^0x[0-9a-fA-F]{40}$"></label>
+      <div class="grid2">
+        <label>Currency
+          <select id="c-token"><option value="USDC">USDC</option><option value="EURC">EURC</option></select>
+        </label>
+        <label>Review window (days)<input id="c-review" type="number" min="0.05" max="30" step="0.05" value="3" required></label>
+      </div>
+      <fieldset>
+        <legend>Milestones</legend>
+        <div id="c-milestones"></div>
+        <button type="button" id="c-add" class="btn ghost">+ Add milestone</button>
+      </fieldset>
+      <label>Agreement (scope, deliverables). Only its hash goes on chain.
+        <textarea id="c-terms" rows="4" placeholder="e.g. Landing page: design (M1), build (M2)…"></textarea>
+      </label>
+      <p class="muted" id="c-summary"></p>
+      <button class="btn primary" id="c-submit">Fund and create job</button>
+    </form>
+    <div id="create-result"></div>
+  </section>
+
+  <footer class="foot">
+    <span>Contract <a id="contract-link" target="_blank" rel="noopener"></a></span>
+    <span><a href="https://github.com/yangdongsuk/stagepay" target="_blank" rel="noopener">Source</a> · MIT · no owner, no fees, no upgrades</span>
+  </footer>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
