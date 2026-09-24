@@ -6,6 +6,8 @@ A client locks the whole job up front. Each milestone is paid when the client ap
 
 **Live app:** https://yangdongsuk.github.io/stagepay/ · **Contract:** see [Deployment](#deployment)
 
+**Demo video (1:46):** [stagepay-demo.mp4](https://github.com/yangdongsuk/stagepay/releases/download/v0.1.0-demo/stagepay-demo.mp4) ([release](https://github.com/yangdongsuk/stagepay/releases/tag/v0.1.0-demo)), recorded on a local Arc node (`arc-anvil --network arc`) with test accounts, plus the live Arbitrum Sepolia app
+
 ## Why
 
 Freelancers on marketplaces wait days for payouts and give up 10–20% in fees. Paying them directly means someone has to trust someone: the client pays and hopes the work arrives, or the freelancer works and hopes the invoice gets paid.
