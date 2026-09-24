@@ -25,8 +25,8 @@ export const NETWORKS = {
     native: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpc: 'https://sepolia-rollup.arbitrum.io/rpc',
     explorer: 'https://sepolia.arbiscan.io',
-    contract: '0x0000000000000000000000000000000000000000',
-    deployBlock: 0,
+    contract: '0x0A87039a127b600cF9B85d4C33d97c08054e15E6',
+    deployBlock: 312175664,
     minFeeGwei: 0,
     feeNote: 'Network fees are paid in testnet ETH.',
     tokens: {

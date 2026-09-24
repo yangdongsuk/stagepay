@@ -62,6 +62,7 @@ cd app && python3 -m http.server 8000   # static app, no build step
 | Network | Address |
 | --- | --- |
 | Arc mainnet (5042) | _pending_ |
+| Arbitrum Sepolia (421614) | [`0x0A87039a127b600cF9B85d4C33d97c08054e15E6`](https://sepolia.arbiscan.io/address/0x0A87039a127b600cF9B85d4C33d97c08054e15E6) · app: [?net=arbitrum-sepolia](https://yangdongsuk.github.io/stagepay/?net=arbitrum-sepolia) · supports **USDG** (Paxos Global Dollar) and USDC |
 
 ## Limitations
 
